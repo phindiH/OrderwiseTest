@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<link rel="stylesheet" type="text/css" href="">
+
+	<!--Use CDN to -->
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+	<style type="text/css">
+		div{
+			padding:8px;
+			}
+	</style>
+</head>
+
+<body>
+
+<div>
+	<p id="p1">Please give your feedback below</p>
+	<p id="p2">Click New Line if you need more space<br>
+	<p id="p3">Click X ro remove the current line.</p>
+	<p id="p4">Your review must be at least 50 characters, but no more than 1000 characters</p>
+</div>
+<br>
+<!--<form>
+  
+  <label for="line1">Line 1 <input type="text" id="line1" name="line1" maxlength="40"></label><br><br>
+  <label for="line2">Line 2 <input type="text" id="line2" name="line2"></label><br><br>
+  <label for="line3">Line 3 </label><input type="text" id="line3" name="line3"><br>
+</form>-->
+<form>
+<div id='TextBoxesGroup'>
+	<div id="TextBoxDiv1">
+    	<label>Line 1 : </label><input type='textbox' id='textbox1' maxlength="40">&nbsp;<input type="button" value="X" id='removeButton'>
+	</div>
+</div>
+<br>
+<div>
+	<input type='button' value='New line' id='addLine'>
+	<input type='button' value='Remove Button' id='removeButton'>
+</div>
+
+
+<p>&nbsp;</p>
+
+<div>
+	<textarea cols="60" rows="10">
+	 
+	</textarea> 
+</div>
+</form>
+
+
+<script type="text/javascript">
+
+$(document).ready(function(){
+
+	$('#textbox1:odd').css("background-color", "green");
+
+	$('input').keyup(function(){
+        if(this.value.length==$(this).attr("maxlength")){
+            $(this).next().focus();
+        }
+    });
+
+	var counter = 2;
+
+	$("#addLine").click(function () {
+
+	$("textbox1").odd().css("background-color", "#D3D3D3");  
+
+	if(counter>25){
+        alert("Cannot add more fields");
+        return false;
+	}   
+
+
+	var newTextBoxDiv = $(document.createElement('div'))
+    	.attr("id", 'TextBoxDiv' + counter);
+
+	newTextBoxDiv.after().html('<label>Line '+ counter + ' : </label>' +
+      	'<input type="text" name="textbox' + counter + 
+      	'" id="textbox' + counter + '" value="" >');
+
+	newTextBoxDiv.appendTo("#TextBoxesGroup");
+
+
+	counter++;
+	 });
+
+	
+ 	$("#removeButton").click(function () {
+	if(counter==1){
+      	alert("No more textbox to remove");
+      	return false;
+   	}   
+
+	counter--;
+
+    $("#TextBoxDiv" + counter).remove();
+
+	 });
+
+ 	$('#textbox').val(this.checked);
+
+    $('#removeButton').change(function() {
+        if(this.checked) {
+            var returnVal = confirm("Are you sure?");
+            $(this).prop("checked", returnVal);
+        }
+        $('#textbox').val(this.checked);        
+    });
+
+});
+</script>
+
+</body>
+</html>
